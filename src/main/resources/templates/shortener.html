@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Shortener</title>
+</head>
+<body>
+<div class="container">
+    <h1>URL Shortener</h1>
+
+    <form th:action="@{/shorten}" method="post">
+        <input type="text" name="originalUrl" th:value="${originalUrl}" placeholder="Enter URL"/>
+        <button type="submit">Shorten</button>
+    </form>
+
+    <p th:unless="${#strings.isEmpty(shortenedUrl)}">Shortened URL: <a th:href="${shortenedUrl}" th:text="${shortenedUrl}">Shortened URL</a></p>
+</div>
+</body>
+</html>

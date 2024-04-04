@@ -31,7 +31,7 @@ public class ShortenerController {
 
     @PostMapping
     public Object  shortenUrl(@RequestParam String originalUrl, Model model) {
-        if (StringUtils.isBlank(originalUrl) || !originalUrl.startsWith("http://") || !originalUrl.startsWith("https://")) {
+        if (StringUtils.isBlank(originalUrl) || !(originalUrl.startsWith("http://") || originalUrl.startsWith("https://"))) {
             ModelAndView modelAndView = new ModelAndView("badrequest");
             modelAndView.addObject("message", "No URL provided, or url doesn't have 'http://' prefix");
             return modelAndView;

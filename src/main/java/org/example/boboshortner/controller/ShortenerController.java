@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,18 +38,19 @@ public class ShortenerController {
     }
 
     @GetMapping(path = "/{key}")
-    public ResponseEntity<?> redirectToSpecificURL(@PathVariable String key) {
+    public Object redirectToSpecificURL(@PathVariable String key) {
         try {
             String originalUrl = shortenerService.getOriginalUrl(key);
             if (originalUrl == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("URL not found");
+                ModelAndView modelAndView = new ModelAndView("notfound");
+                modelAndView.addObject("message", "No URL found for this key: " + key);
+                return modelAndView;
             }
             return ResponseEntity.status(302)
                     .header("Location", originalUrl)
                     .build();
-
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while redirecting");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while redirecting", e);
         }
     }
 

@@ -8,6 +8,7 @@ import org.example.boboshortner.settings.UrlSettings;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -37,8 +38,10 @@ public class ShortenerService {
     }
 
     public String getOriginalUrl(String key) {
-        Url url = urlStorage.get(key);
-        url.getUsed().incrementAndGet();
-        return url.getOriginalUrl();
+        return Optional.ofNullable(urlStorage.get(key))
+                .map(url -> {
+                    url.getUsed().incrementAndGet();
+                    return url.getOriginalUrl();
+                }).orElse(null);
     }
 }

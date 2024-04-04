@@ -1,6 +1,7 @@
 package org.example.boboshortner.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.example.boboshortner.model.Url;
 import org.example.boboshortner.service.ShortenerService;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,13 @@ public class ShortenerController {
     }
 
     @PostMapping
-    public String shortenUrl(@RequestParam String originalUrl, Model model) {
+    public Object  shortenUrl(@RequestParam String originalUrl, Model model) {
+        if (StringUtils.isBlank(originalUrl) || !originalUrl.startsWith("http://") || !originalUrl.startsWith("https://")) {
+            ModelAndView modelAndView = new ModelAndView("badrequest");
+            modelAndView.addObject("message", "No URL provided, or url doesn't have 'http://' prefix");
+            return modelAndView;
+        }
+
         Url url = shortenerService.createShortUrl(originalUrl);
         String shortUrl = url.getShortUrl();
         model.addAttribute("originalUrl", originalUrl);

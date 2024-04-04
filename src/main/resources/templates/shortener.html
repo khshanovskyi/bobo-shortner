@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>URL Shortener</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <script th:src="@{/js/scripts.js}"></script>
 </head>
 <body>
 <div class="container">
-    <h1>URL Shortener</h1>
+    <h1 class="header-text">URL Shortener</h1>
 
-    <form th:action="@{/shorten}" method="post">
-        <input type="text" name="originalUrl" th:value="${originalUrl}" placeholder="Enter URL"/>
-        <button type="submit">Shorten</button>
+    <form th:action="@{/}" method="post" class="form-group">
+        <input type="text" name="originalUrl" th:value="${originalUrl}" placeholder="Enter URL" class="form-input"/>
+        <button type="submit" class="button-submit">Shorten</button>
     </form>
 
-    <p th:unless="${#strings.isEmpty(shortenedUrl)}">Shortened URL: <a th:href="${shortenedUrl}" th:text="${shortenedUrl}">Shortened URL</a></p>
+    <div class="link-result" th:unless="${#strings.isEmpty(shortenedUrl)}">
+        <p>Shortened URL:
+            <a id="shortUrl" th:href="${shortenedUrl}" th:text="${shortenedUrl}">Shortened URL</a>
+        </p>
+        <button class="button-copy" onclick="copyToClipboard()">Copy</button>
+    </div>
 </div>
 </body>
 </html>

@@ -24,7 +24,7 @@ public class ShortenerController {
         return "shortener";
     }
 
-    @PostMapping("/shorten")
+    @PostMapping("/")
     public String shortenUrl(@RequestParam String originalUrl, Model model) {
         Url url = shortenerService.createShortUrl(originalUrl);
         String shortUrl = url.getShortUrl();

@@ -4,3 +4,5 @@ spring:
 short-url:
   base-url: ${BASE_URL:http://localhost:8080/}
   length: ${SHORT_URL_LENGTH:5}
+server:
+  port: ${PORT:8080}

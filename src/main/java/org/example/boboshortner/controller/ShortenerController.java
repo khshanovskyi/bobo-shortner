@@ -44,7 +44,7 @@ public class ShortenerController {
         return "shortener";
     }
 
-    @GetMapping
+    @GetMapping(path = "/info/hello")
     public String hello() {
         return "Hello";
     }

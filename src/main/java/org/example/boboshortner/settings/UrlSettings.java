@@ -15,6 +15,5 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class UrlSettings {
 
-    private String baseUrl;
     private int length;
 }

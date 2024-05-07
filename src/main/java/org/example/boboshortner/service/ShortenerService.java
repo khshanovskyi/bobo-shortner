@@ -24,12 +24,12 @@ public class ShortenerService {
         urlStorage = new ConcurrentHashMap<>();
     }
 
-    public Url createShortUrl(String originalUrl) {
+    public Url createShortUrl(String serviceUrl, String originalUrl) {
         String randomKey = RandomStringUtils.randomAlphanumeric(urlSettings.getLength());
 
         Url url = Url.builder().key(randomKey)
                 .originalUrl(originalUrl)
-                .shortUrl(urlSettings.getBaseUrl() + randomKey)
+                .shortUrl(serviceUrl + randomKey)
                 .build();
 
         urlStorage.put(randomKey, url);

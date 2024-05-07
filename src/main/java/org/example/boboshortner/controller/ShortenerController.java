@@ -44,6 +44,11 @@ public class ShortenerController {
         return "shortener";
     }
 
+    @GetMapping
+    public String hello() {
+        return "Hello";
+    }
+
     @GetMapping(path = "/{key}")
     public Object redirectToSpecificURL(@PathVariable String key) {
         try {
